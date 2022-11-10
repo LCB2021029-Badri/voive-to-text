@@ -1,5 +1,6 @@
 package com.example.voice_text
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,6 +24,15 @@ class MainActivity : AppCompatActivity() {
         //
         binding.btnButton.setOnClickListener {
             askSpeechInput()
+        }
+    }
+
+    //
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == RQ_SPEECH_REC && resultCode == Activity.RESULT_OK){
+            val result = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            binding.tvText.text = result?.get(0).toString()
         }
     }
 
